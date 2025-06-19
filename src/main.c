@@ -3,6 +3,7 @@
 #include <string.h>                  // Inclui a biblioteca de manipulação de strings (para memset, snprintf)
 #include "pico/stdlib.h"             // Inclui a biblioteca padrão do SDK do Raspberry Pi Pico
 #include "pico/binary_info.h"        // Inclui a biblioteca para informações binárias do Pico (usado em compilação)
+#include "pico/rand.h"               // Inclui a biblioteca para aquisição de números aleatórios da Raspberry Pi pico
 #include "hardware/gpio.h"           // Inclui a biblioteca para controle de pinos GPIO
 #include "hardware/pwm.h"            // Inclui a biblioteca para controle de PWM (Pulse Width Modulation)
 //#include "hardware/adc.h"            // Inclui a biblioteca para controle do ADC (Analog-to-Digital Converter), embora não seja usado diretamente neste código
@@ -205,9 +206,9 @@ void task_reflex_test(void *params) {
 
     // Loop principal do jogo: continua enquanto a flag 'game_over' for falsa
     while (!game_over) { 
-        int color = rand() % 3;          // Gera um número aleatório (0, 1 ou 2) para escolher a cor (verde, vermelho, amarelo)
-        uint led_pin = 0;                // Variável para armazenar o pino do LED a ser aceso
-        uint buzzer_pin = 0;             // Variável para armazenar o pino do buzzer a ser usado
+        uint32_t color = get_rand_32() % 3;  // Gera um número aleatório (0, 1 ou 2) para escolher a cor (verde, vermelho, amarelo)
+        uint led_pin = 0;                    // Variável para armazenar o pino do LED a ser aceso
+        uint buzzer_pin = 0;                 // Variável para armazenar o pino do buzzer a ser usado
 
         // Atribui o pino do LED e do buzzer de acordo com a cor escolhida
         switch (color) {
